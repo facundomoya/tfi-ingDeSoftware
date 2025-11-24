@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState } from "react";
-import { createPaciente, listObrasSociales } from "../api/pacientes";
-import type { AltaPacienteDTO, Domicilio, ObraSocial } from "../api/pacientes";
+import { createPaciente, listObrasSociales, listPacientes } from "../api/pacientes";
+import type { AltaPacienteDTO, Domicilio, ObraSocial, Paciente } from "../api/pacientes";
 import { extractErrorMessage } from "../api/http";
 
 type FormState = {
@@ -31,12 +31,14 @@ export default function Paciente() {
   const [okMsg, setOkMsg] = useState<string | null>(null);
   const [errMsg, setErrMsg] = useState<string | null>(null);
   const [obras, setObras] = useState<ObraSocial[]>([]);
+  const [pacientes, setPacientes] = useState<Paciente[]>([]);
+  const [loadingPacientes, setLoadingPacientes] = useState(false);
   const obraElegida = useMemo(
     () => obras.find(o => o.codigo === form.obraSocialCodigo),
     [obras, form.obraSocialCodigo]
   );
 
-  // Cargar obras sociales (si tu back las expone)
+  // Cargar obras sociales y pacientes
   useEffect(() => {
     (async () => {
       try {
@@ -47,7 +49,21 @@ export default function Paciente() {
         setObras([]);
       }
     })();
+
+    cargarPacientes();
   }, []);
+
+  async function cargarPacientes() {
+    setLoadingPacientes(true);
+    try {
+      const lista = await listPacientes();
+      setPacientes(lista);
+    } catch (err) {
+      console.error("Error al cargar pacientes:", err);
+    } finally {
+      setLoadingPacientes(false);
+    }
+  }
 
   function onChange<K extends keyof FormState>(key: K, value: FormState[K]) {
     setForm(prev => ({ ...prev, [key]: value }));
@@ -102,6 +118,8 @@ export default function Paciente() {
       const creado = await createPaciente(payload);
       setOkMsg(`Paciente ${creado.apellido}, ${creado.nombre} (${creado.cuil}) creado correctamente`);
       setForm(initialForm);
+      // Recargar la lista de pacientes
+      await cargarPacientes();
     } catch (err) {
       setErrMsg(extractErrorMessage(err));
     } finally {
@@ -246,6 +264,65 @@ export default function Paciente() {
           </button>
         </div>
       </form>
+
+      {/* Lista de Pacientes */}
+      <div className="mt-12">
+        <div className="mb-4 flex items-center justify-between">
+          <h2 className="text-xl font-semibold tracking-tight">Lista de Pacientes</h2>
+          <button
+            onClick={cargarPacientes}
+            disabled={loadingPacientes}
+            className="rounded-xl border px-4 py-2 text-sm hover:bg-slate-50 disabled:opacity-60"
+          >
+            {loadingPacientes ? "Cargando..." : "Actualizar"}
+          </button>
+        </div>
+
+        {loadingPacientes && pacientes.length === 0 ? (
+          <div className="rounded-xl border p-8 text-center text-slate-500">
+            Cargando pacientes...
+          </div>
+        ) : pacientes.length === 0 ? (
+          <div className="rounded-xl border p-8 text-center text-slate-500">
+            No hay pacientes registrados
+          </div>
+        ) : (
+          <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+            {pacientes.map((paciente) => (
+              <div
+                key={paciente.cuil}
+                className="rounded-xl border bg-white p-4 shadow-sm hover:shadow-md transition-shadow"
+              >
+                <div className="mb-2">
+                  <h3 className="font-semibold text-slate-900">
+                    {paciente.apellido}, {paciente.nombre}
+                  </h3>
+                  <p className="text-sm text-slate-600">CUIL: {paciente.cuil}</p>
+                </div>
+                
+                <div className="mb-2 text-sm text-slate-700">
+                  <p className="font-medium">Domicilio:</p>
+                  <p className="text-slate-600">
+                    {paciente.domicilio.calle} {paciente.domicilio.numero}, {paciente.domicilio.localidad}
+                  </p>
+                </div>
+
+                {paciente.obraSocial ? (
+                  <div className="rounded-lg bg-blue-50 p-2 text-sm">
+                    <p className="font-medium text-blue-900">Obra Social:</p>
+                    <p className="text-blue-700">{paciente.obraSocial.nombre}</p>
+                    <p className="text-xs text-blue-600">N° Afiliado: {paciente.obraSocial.numeroAfiliado}</p>
+                  </div>
+                ) : (
+                  <div className="rounded-lg bg-slate-50 p-2 text-sm text-slate-600">
+                    Sin obra social
+                  </div>
+                )}
+              </div>
+            ))}
+          </div>
+        )}
+      </div>
     </div>
   );
 }

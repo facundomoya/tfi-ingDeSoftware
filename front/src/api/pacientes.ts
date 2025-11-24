@@ -51,3 +51,9 @@ export async function listObrasSociales(): Promise<ObraSocial[]> {
   const { data } = await http.get<ObraSocial[]>("/obras-sociales");
   return data;
 }
+
+// Listar todos los pacientes
+export async function listPacientes(): Promise<Paciente[]> {
+  const { data } = await http.get<Paciente[]>("/pacientes");
+  return data;
+}

@@ -2,7 +2,7 @@ import axios from "axios";
 
 const baseURL =
   import.meta.env.VITE_API_URL?.toString() ||
-  "http://localhost:3000/api/"; // Nest by default
+  "http://localhost:8080/api"; // Spring Boot default port
 
 export const http = axios.create({
   baseURL,
