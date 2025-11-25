@@ -69,10 +69,13 @@
     </dependencies>
 
     <properties>
-        <maven.compiler.source>22</maven.compiler.source>
-        <maven.compiler.target>22</maven.compiler.target>
+        <!-- Use Java 21 bytecode to keep compatibility with the Spring Boot repackager -->
+        <maven.compiler.source>21</maven.compiler.source>
+        <maven.compiler.target>21</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <java.version>22</java.version>
+        <java.version>21</java.version>
+        <!-- Prefer explicit release to ensure the compiler uses the proper release when supported -->
+        <maven.compiler.release>21</maven.compiler.release>
     </properties>
 
     <build>
