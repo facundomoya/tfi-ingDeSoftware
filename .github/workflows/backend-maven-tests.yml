@@ -30,5 +30,5 @@ jobs:
           cache: 'maven'
 
       - name: Correr test con Maven
-        run: mvn -B clean test
+        run: mvn -B -ntp clean test
  
