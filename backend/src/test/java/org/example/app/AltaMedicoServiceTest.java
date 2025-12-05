@@ -22,7 +22,7 @@ class AltaMedicoServiceTest {
 
     @Test
     void crea_medico_con_datos_validos_ok() {
-        String cuilEsperado = "20-34567890-1";
+        String cuilEsperado = "20-39393175-3";  // CUIL válido
         String nombreEsperado = "Carlos";
         String apellidoEsperado = "Rodríguez";
 
@@ -37,7 +37,7 @@ class AltaMedicoServiceTest {
 
     @Test
     void medico_guardado_en_repositorio_ok() {
-        String cuil = "27-45678901-2";
+        String cuil = "20-39393175-3";
         Medico m = alta.registrarMedico(cuil, "Laura", "Fernández");
 
         var encontrado = repoMed.buscarMedicoPorCuil(cuil);
@@ -47,8 +47,8 @@ class AltaMedicoServiceTest {
 
     @Test
     void listar_todos_los_medicos_ok() {
-        alta.registrarMedico("20-11111111-1", "Medico1", "Apellido1");
-        alta.registrarMedico("20-22222222-2", "Medico2", "Apellido2");
+        alta.registrarMedico("20-39393175-3", "Medico1", "Apellido1");
+        alta.registrarMedico("20-33538818-7", "Medico2", "Apellido2");
 
         var todos = repoMed.listarTodos();
         assertThat(todos).hasSize(2);

@@ -22,7 +22,7 @@ class AltaEnfermeraServiceTest {
 
     @Test
     void crea_enfermera_con_datos_validos_ok() {
-        String cuilEsperado = "27-12345678-9";
+        String cuilEsperado = "20-33538818-7";
         String nombreEsperado = "María";
         String apellidoEsperado = "González";
 
@@ -37,7 +37,7 @@ class AltaEnfermeraServiceTest {
 
     @Test
     void enfermera_guardada_en_repositorio_ok() {
-        String cuil = "27-23456789-0";
+        String cuil = "20-33538818-7";
         Enfermera e = alta.registrarEnfermera(cuil, "Ana", "Martínez");
 
         Optional<Enfermera> encontrada = repoEnf.buscarEnfermeraPorCuil(cuil);
@@ -47,8 +47,8 @@ class AltaEnfermeraServiceTest {
 
     @Test
     void listar_todas_las_enfermeras_ok() {
-        alta.registrarEnfermera("27-11111111-1", "Enfermera1", "Apellido1");
-        alta.registrarEnfermera("27-22222222-2", "Enfermera2", "Apellido2");
+        alta.registrarEnfermera("20-33538818-7", "Enfermera1", "Apellido1");
+        alta.registrarEnfermera("20-39393175-3", "Enfermera2", "Apellido2");
 
         var todas = repoEnf.listarTodas();
         assertThat(todas).hasSize(2);

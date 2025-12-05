@@ -13,8 +13,6 @@ import org.example.infrastructure.RepositorioObrasSocialesEnMemoria;
 import org.example.infrastructure.RepositorioPacientesEnMemoria;
 import org.example.app.interfaces.RepositorioEnfermeras;
 import org.example.app.interfaces.RepositorioMedicos;
-import org.example.app.interfaces.RepositorioObrasSociales;
-import org.example.app.interfaces.RepositorioPacientes;
 import org.example.auth.BCryptHasher;
 import org.example.auth.app.ServicioAuth;
 import org.example.auth.ports.EnfermeraRepositorio;
@@ -43,6 +41,9 @@ public class AppConfig {
     @Bean
     public RepositorioIngresos repositorioIngresos() {
         return new RepositorioIngresosEnMemoria();
+    }
+
+    @Bean
     public RepositorioEnfermeras repositorioEnfermeras() {
         // Implementación en memoria
         return new RepositorioEnfermerasEnMemoria();
@@ -110,6 +111,9 @@ public class AppConfig {
     @Bean
     public ModuloReclamo moduloReclamo(RepositorioIngresos repoIngresos) {
         return new ModuloReclamo(repoIngresos);
+    }
+
+    @Bean
     public AltaEnfermeraService altaEnfermeraService(
             RepositorioEnfermeras repoEnfermeras
     ) {
