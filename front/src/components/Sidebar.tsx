@@ -1,7 +1,9 @@
-import { NavLink, Outlet } from "react-router-dom";
+import { NavLink, Outlet, useNavigate } from "react-router-dom";
 import { Activity, User, LogOut, Stethoscope, Heart } from "lucide-react";
+import { logout } from "../api/auth";
 
 export default function Sidebar() {
+  const navigate = useNavigate();
   return (
     <div className="bg-[#E8EEF2] min-h-screen">
 
@@ -64,7 +66,14 @@ export default function Sidebar() {
         </nav>
 
         {/* BOTÓN LOGOUT Arriba del borde inferior */}
-        <button className="mt-auto flex items-center gap-2 text-red-400 hover:text-red-300 transition">
+        <button
+          type="button"
+          onClick={() => {
+            logout();
+            navigate("/login");
+          }}
+          className="mt-auto flex items-center gap-2 text-red-400 hover:text-red-300 transition"
+        >
           <LogOut size={18} />
           Cerrar sesión
         </button>
