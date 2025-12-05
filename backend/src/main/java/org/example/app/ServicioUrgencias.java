@@ -7,8 +7,8 @@ import org.example.domain.Ingreso;
 import org.example.domain.NivelEmergencia;
 import org.example.domain.Paciente;
 
-import java.util.ArrayList;
-import java.util.Comparator;
+//import java.util.ArrayList;
+//import java.util.Comparator;
 import java.util.List;
 
 public class ServicioUrgencias {
