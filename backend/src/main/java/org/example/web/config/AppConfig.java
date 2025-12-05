@@ -2,8 +2,11 @@ package org.example.web.config;
 
 import org.example.app.AltaPacienteService;
 import org.example.app.ServicioUrgencias;
+import org.example.app.ModuloReclamo;
+import org.example.app.interfaces.RepositorioIngresos;
 import org.example.app.interfaces.RepositorioObrasSociales;
 import org.example.app.interfaces.RepositorioPacientes;
+import org.example.infrastructure.RepositorioIngresosEnMemoria;
 import org.example.infrastructure.RepositorioObrasSocialesEnMemoria;
 import org.example.infrastructure.RepositorioPacientesEnMemoria;
 import org.springframework.context.annotation.Bean;
@@ -25,6 +28,11 @@ public class AppConfig {
     }
 
     @Bean
+    public RepositorioIngresos repositorioIngresos() {
+        return new RepositorioIngresosEnMemoria();
+    }
+
+    @Bean
     public AltaPacienteService altaPacienteService(
             RepositorioPacientes repoPacientes,
             RepositorioObrasSociales repoOS
@@ -33,7 +41,12 @@ public class AppConfig {
     }
 
     @Bean
-    public ServicioUrgencias servicioUrgencias(RepositorioPacientes repoPacientes){
-     return new ServicioUrgencias(repoPacientes);
+    public ServicioUrgencias servicioUrgencias(RepositorioPacientes repoPacientes, RepositorioIngresos repoIngresos){
+     return new ServicioUrgencias(repoPacientes, repoIngresos);
+    }
+
+    @Bean
+    public ModuloReclamo moduloReclamo(RepositorioIngresos repoIngresos) {
+        return new ModuloReclamo(repoIngresos);
     }
 }
