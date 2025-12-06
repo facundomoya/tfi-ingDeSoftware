@@ -2,9 +2,11 @@ package org.example.infrastructure;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.example.app.interfaces.RepositorioIngresos;
 import org.example.domain.Ingreso;
+import org.example.domain.EstadoIngreso;
 
 public class RepositorioIngresosEnMemoria implements RepositorioIngresos{
 
@@ -19,7 +21,8 @@ public class RepositorioIngresosEnMemoria implements RepositorioIngresos{
 
     @Override
     public List<Ingreso> obtenerPendientes(){
-        return listaEspera;
+        return listaEspera.stream().filter(i -> i.getEstado() == EstadoIngreso.PENDIENTE)
+                .collect(Collectors.toList());
     }
 
     @Override

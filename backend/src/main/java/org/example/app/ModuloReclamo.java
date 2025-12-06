@@ -28,7 +28,8 @@ public class ModuloReclamo {
         siguiente.setEstado(EstadoIngreso.EN_PROCESO);
         
         // Lo saca de la lista de espera
-        dbIngresos.eliminarDePendientes(siguiente);
+        //Este metodo ya no se usa ya que el repositorio filtra por estado
+        //dbIngresos.eliminarDePendientes(siguiente);
 
         return siguiente;
     }
