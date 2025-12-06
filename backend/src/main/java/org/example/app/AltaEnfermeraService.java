@@ -1,4 +1,4 @@
-﻿package org.example.app;
+package org.example.app;
 
 import org.example.app.interfaces.RepositorioEnfermeras;
 import org.example.domain.Enfermera;

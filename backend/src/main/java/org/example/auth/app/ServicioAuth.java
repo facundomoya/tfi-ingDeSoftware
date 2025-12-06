@@ -1,4 +1,4 @@
-﻿package org.example.auth.app;
+package org.example.auth.app;
 
 import org.example.app.interfaces.RepositorioEnfermeras;
 import org.example.app.interfaces.RepositorioMedicos;
