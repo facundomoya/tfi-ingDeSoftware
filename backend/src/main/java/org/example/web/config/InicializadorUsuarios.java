@@ -14,8 +14,8 @@ public class InicializadorUsuarios implements InitializingBean {
     private final RepositorioMedicos repoMedicos;
 
     public InicializadorUsuarios(ServicioAuth servicioAuth,
-                                 RepositorioEnfermeras repoEnfermeras,
-                                 RepositorioMedicos repoMedicos) {
+            RepositorioEnfermeras repoEnfermeras,
+            RepositorioMedicos repoMedicos) {
         this.servicioAuth = servicioAuth;
         this.repoEnfermeras = repoEnfermeras;
         this.repoMedicos = repoMedicos;
@@ -53,4 +53,3 @@ public class InicializadorUsuarios implements InitializingBean {
         }
     }
 }
-

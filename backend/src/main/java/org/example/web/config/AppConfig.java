@@ -122,9 +122,10 @@ public class AppConfig {
 
     @Bean
     public AltaEnfermeraService altaEnfermeraService(
-            RepositorioEnfermeras repoEnfermeras
+            RepositorioEnfermeras repoEnfermeras,
+            ServicioAuth servicioAuth
     ) {
-        return new AltaEnfermeraService(repoEnfermeras);
+        return new AltaEnfermeraService(repoEnfermeras, servicioAuth);
     }
 
     @Bean

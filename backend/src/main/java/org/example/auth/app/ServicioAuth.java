@@ -1,4 +1,4 @@
-package org.example.auth.app;
+﻿package org.example.auth.app;
 
 import org.example.app.interfaces.RepositorioEnfermeras;
 import org.example.app.interfaces.RepositorioMedicos;
@@ -8,6 +8,7 @@ import org.example.domain.Enfermera;
 import org.example.domain.Medico;
 import org.example.domain.Exceptions.DomainException;
 
+import java.util.Optional;
 import java.util.regex.Pattern;
 
 public class ServicioAuth {
@@ -65,6 +66,42 @@ public class ServicioAuth {
         return usuarios.guardar(u);
     }
 
+    public void inicializarUnUsuario(String cuil) {
+        // Intentar crear usuario para enfermera (si existe)
+        try {
+            Optional<Enfermera> enfermeraOpt = enfRepo.buscarEnfermeraPorCuil(cuil);
+            if (enfermeraOpt.isPresent()) {
+                Enfermera enfermera = enfermeraOpt.get();
+                String digits = enfermera.getCuil().replaceAll("[^0-9]", "");
+                String email = "enfermera" + digits + "@clinica.com";
+                try {
+                    registrarParaEnfermera(email, "password123", enfermera.getCuil());
+                } catch (Exception e) {
+                    // Ignorar si ya existe el usuario u otros errores al registrar
+                }
+            }
+        } catch (Exception e) {
+            System.err.println("Error buscando/enregistrando enfermera para cuil " + cuil + ": " + e.getMessage());
+        }
+
+        // Intentar crear usuario para medico (si existe)
+        try {
+            Optional<Medico> medicoOpt = medRepo.buscarMedicoPorCuil(cuil);
+            if (medicoOpt.isPresent()) {
+                Medico medico = medicoOpt.get();
+                String digits = medico.getCuil().replaceAll("[^0-9]", "");
+                String email = "medico" + digits + "@clinica.com";
+                try {
+                    registrarParaMedico(email, "password123", medico.getCuil());
+                } catch (Exception e) {
+                    // Ignorar si ya existe el usuario u otros errores al registrar
+                }
+            }
+        } catch (Exception e) {
+            System.err.println("Error buscando/enregistrando medico para cuil " + cuil + ": " + e.getMessage());
+        }
+    }
+
     // ===== Login =====
     public Usuario login(String email, String password) {
         // mensaje genérico SIEMPRE
@@ -90,3 +127,4 @@ public class ServicioAuth {
             throw DomainException.validation("CUIL es obligatorio");
     }
 }
+
