@@ -2,6 +2,7 @@ package org.example.app;
 
 import java.util.List;
 
+import org.example.app.interfaces.RepositorioAtenciones;
 import org.example.app.interfaces.RepositorioIngresos;
 import org.example.domain.EstadoIngreso;
 import org.example.domain.Ingreso;
@@ -9,6 +10,7 @@ import org.example.domain.Ingreso;
 public class ModuloReclamo {
 
     private final RepositorioIngresos dbIngresos; // Usa el MISMO repositorio
+    //private final RepositorioAtenciones dbAtenciones; // Nuevo repositorio para atenciones
 
     public ModuloReclamo(RepositorioIngresos dbIngresos) {
         this.dbIngresos = dbIngresos;
@@ -33,4 +35,6 @@ public class ModuloReclamo {
 
         return siguiente;
     }
+
+    
 }

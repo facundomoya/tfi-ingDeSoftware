@@ -30,4 +30,10 @@ public class RepositorioIngresosEnMemoria implements RepositorioIngresos{
         listaEspera.remove(ingreso);
     }
 
+    @Override
+    public List<Ingreso> obtenerFinalizados(){
+        return listaEspera.stream().filter(i -> i.getEstado() == EstadoIngreso.FINALIZADO)
+                .collect(Collectors.toList());
+    }
+
 }

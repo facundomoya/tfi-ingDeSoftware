@@ -8,6 +8,8 @@ public interface RepositorioIngresos {
     void guardar(Ingreso ingreso);
 
     List<Ingreso> obtenerPendientes(); // Devuelve la lista ordenada
+
+    List<Ingreso> obtenerFinalizados();
     
     void eliminarDePendientes(Ingreso ingreso);
 }

@@ -71,7 +71,7 @@ public class ModuloReclamoTest {
             
         } catch (RuntimeException e) {
             // Verificamos que el mensaje sea el correcto
-            org.junit.jupiter.api.Assertions.assertEquals(
+            Assertions.assertEquals(
                 "No hay pacientes en espera", 
                 e.getMessage()
             );
