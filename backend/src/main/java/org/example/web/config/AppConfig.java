@@ -5,12 +5,14 @@ import org.example.app.AltaMedicoService;
 import org.example.app.AltaPacienteService;
 import org.example.app.ServicioUrgencias;
 import org.example.app.ModuloReclamo;
+import org.example.app.ModuloRegistroAtencion;
 import org.example.app.interfaces.RepositorioIngresos;
 import org.example.app.interfaces.RepositorioObrasSociales;
 import org.example.app.interfaces.RepositorioPacientes;
 import org.example.infrastructure.RepositorioIngresosEnMemoria;
 import org.example.infrastructure.RepositorioObrasSocialesEnMemoria;
 import org.example.infrastructure.RepositorioPacientesEnMemoria;
+import org.example.app.interfaces.RepositorioAtenciones;
 import org.example.app.interfaces.RepositorioEnfermeras;
 import org.example.app.interfaces.RepositorioMedicos;
 import org.example.auth.BCryptHasher;
@@ -41,6 +43,11 @@ public class AppConfig {
     @Bean
     public RepositorioIngresos repositorioIngresos() {
         return new RepositorioIngresosEnMemoria();
+    }
+
+    @Bean
+    public RepositorioAtenciones repositorioAtenciones() {
+        return new RepositorioAtencionesEnMemoria();
     }
 
     @Bean
@@ -111,6 +118,11 @@ public class AppConfig {
     @Bean
     public ModuloReclamo moduloReclamo(RepositorioIngresos repoIngresos) {
         return new ModuloReclamo(repoIngresos);
+    }
+
+    @Bean
+    public ModuloRegistroAtencion moduloRegistroAtencion(RepositorioAtenciones repoAtenciones, RepositorioIngresos repoIngresos) {
+        return new ModuloRegistroAtencion(repoAtenciones, repoIngresos);
     }
 
     @Bean

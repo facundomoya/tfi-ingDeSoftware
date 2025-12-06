@@ -32,6 +32,14 @@ public class DBIngresoEnMemoria implements RepositorioIngresos {
     }
 
     @Override
+    public List<Ingreso> obtenerFinalizados() {
+        // Simula una consulta SQL: "SELECT * FROM ingresos WHERE estado = 'FINALIZADO'"
+        return tablaIngresos.stream()
+                .filter(ingreso -> ingreso.getEstado() == EstadoIngreso.FINALIZADO)     // Solo los finalizados
+                .collect(Collectors.toList());
+    }
+
+    @Override
     public void eliminarDePendientes(Ingreso ingreso) {
         // En realidad, en base de datos esto sería un UPDATE del estado,
         // pero para cumplir con la interfaz de "sacar de la lista":
