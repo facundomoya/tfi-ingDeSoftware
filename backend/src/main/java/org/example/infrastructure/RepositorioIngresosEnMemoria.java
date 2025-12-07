@@ -36,4 +36,10 @@ public class RepositorioIngresosEnMemoria implements RepositorioIngresos{
                 .collect(Collectors.toList());
     }
 
+    @Override
+    public List<Ingreso> obtenerEnProceso(){
+        return listaEspera.stream().filter(i -> i.getEstado() == EstadoIngreso.EN_PROCESO)
+                .collect(Collectors.toList());
+    }
+
 }

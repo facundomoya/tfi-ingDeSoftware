@@ -1,7 +1,7 @@
 // src/main/java/org/example/web/dto/RegistrarUrgenciaRequest.java
 package org.example.web.dto;
 
-public class RegistrarUrgenciaRequest {
+public class AltaUrgenciaRequest {
 
     private String cuilPaciente;
 
@@ -14,7 +14,7 @@ public class RegistrarUrgenciaRequest {
     private Float tensionSistolica;
     private Float tensionDiastolica;
 
-    public RegistrarUrgenciaRequest() {
+    public AltaUrgenciaRequest() {
     }
 
     public String getCuilPaciente() {

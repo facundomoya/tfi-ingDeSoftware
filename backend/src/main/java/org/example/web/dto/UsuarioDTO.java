@@ -6,8 +6,18 @@ public class UsuarioDTO {
     private String cuilActor;
     private String nombre;
     private String apellido;
+    private String hashPreview; // Primeros caracteres del hash para verificar que está hasheado
 
     public UsuarioDTO() {}
+
+    public UsuarioDTO(String email, String rol, String cuilActor, String nombre, String apellido, String hashPreview) {
+        this.email = email;
+        this.rol = rol;
+        this.cuilActor = cuilActor;
+        this.nombre = nombre;
+        this.apellido = apellido;
+        this.hashPreview = hashPreview;
+    }
 
     public UsuarioDTO(String email, String rol, String cuilActor, String nombre, String apellido) {
         this.email = email;
@@ -55,6 +65,14 @@ public class UsuarioDTO {
 
     public void setApellido(String apellido) {
         this.apellido = apellido;
+    }
+
+    public String getHashPreview() {
+        return hashPreview;
+    }
+
+    public void setHashPreview(String hashPreview) {
+        this.hashPreview = hashPreview;
     }
 }
 

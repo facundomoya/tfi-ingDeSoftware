@@ -11,5 +11,7 @@ public interface RepositorioIngresos {
 
     List<Ingreso> obtenerFinalizados();
     
+    List<Ingreso> obtenerEnProceso(); // Ingresos que están siendo atendidos
+    
     void eliminarDePendientes(Ingreso ingreso);
 }
