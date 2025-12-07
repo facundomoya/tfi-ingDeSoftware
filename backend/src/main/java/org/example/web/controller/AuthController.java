@@ -5,8 +5,8 @@ import org.example.auth.domain.Usuario;
 import org.example.auth.ports.UsuarioRepositorio;
 import org.example.domain.Exceptions.DomainException;
 import org.example.web.dto.LoginRequest;
+//import org.example.web.dto.UsuarioDTO;
 import org.example.web.dto.UsuarioDTO;
-import org.example.web.dto.UsuarioDetalleDTO;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -59,10 +59,10 @@ public class AuthController {
 
     // Endpoint para desarrollo/testing - listar todos los usuarios con hash preview
     @GetMapping("/usuarios")
-    public ResponseEntity<List<UsuarioDetalleDTO>> listarUsuarios() {
+    public ResponseEntity<List<UsuarioDTO>> listarUsuarios() {
         List<Usuario> usuarios = usuarioRepositorio.listarTodos();
         
-        List<UsuarioDetalleDTO> dtos = usuarios.stream()
+        List<UsuarioDTO> dtos = usuarios.stream()
                 .map(usuario -> {
                     String nombre, apellido;
                     if (usuario.esEnfermera()) {
@@ -79,7 +79,7 @@ public class AuthController {
                             ? hash.substring(0, 20) + "..." 
                             : hash;
 
-                    return new UsuarioDetalleDTO(
+                    return new UsuarioDTO(
                             usuario.getEmail(),
                             usuario.getRol(),
                             usuario.getCuilActor(),

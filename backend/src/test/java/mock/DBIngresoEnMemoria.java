@@ -40,6 +40,13 @@ public class DBIngresoEnMemoria implements RepositorioIngresos {
     }
 
     @Override
+    public List<Ingreso> obtenerEnProceso() {
+        return tablaIngresos.stream()
+                .filter(ingreso -> ingreso.getEstado() == EstadoIngreso.EN_PROCESO)
+                .collect(Collectors.toList());
+    }
+
+    @Override
     public void eliminarDePendientes(Ingreso ingreso) {
         // En realidad, en base de datos esto sería un UPDATE del estado,
         // pero para cumplir con la interfaz de "sacar de la lista":

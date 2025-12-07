@@ -1,7 +1,7 @@
 package org.example.domain;
 
 import java.time.LocalDateTime;
-import org.example.app.interfaces.RepositorioIngresos;
+
 import org.example.domain.Exceptions.DomainException;
 
 public class Atencion {
@@ -33,5 +33,8 @@ public class Atencion {
     }
     public Medico getMedico() {
         return medico;
+    }
+    public LocalDateTime getFechaAtencion() {
+        return fechaAtencion;
     }
 }

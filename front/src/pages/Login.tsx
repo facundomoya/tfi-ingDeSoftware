@@ -22,7 +22,7 @@ export default function Login() {
       if (usuario.rol === "ENFERMERA") {
         navigate("/urgencia");
       } else {
-        navigate("/paciente");
+        navigate("/medico");
       }
     } catch (error: any) {
       toast.error(error?.response?.data || "Error al iniciar sesión");

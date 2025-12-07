@@ -130,8 +130,9 @@ public class AppConfig {
 
     @Bean
     public AltaMedicoService altaMedicoService(
-            RepositorioMedicos repoMedicos
+            RepositorioMedicos repoMedicos,
+            ServicioAuth servicioAuth
     ) {
-        return new AltaMedicoService(repoMedicos);
+        return new AltaMedicoService(repoMedicos, servicioAuth);
     }
 }
