@@ -9,7 +9,7 @@ import org.example.domain.Exceptions.DomainException;
 import org.example.domain.Ingreso;
 import org.example.domain.NivelEmergencia;
 import org.example.web.dto.IngresoDTO;
-import org.example.web.dto.RegistrarUrgenciaRequest;
+import org.example.web.dto.AltaUrgenciaRequest;
 import org.example.web.mapper.IngresoMapper;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -34,7 +34,7 @@ public class UrgenciasController {
 
     @PostMapping
     public ResponseEntity<?> registrarUrgencia(
-            @RequestBody RegistrarUrgenciaRequest req,
+            @RequestBody AltaUrgenciaRequest req,
             @RequestHeader(value = "X-User-Email", required = false) String userEmail) {
         try {
             // Validar que el usuario esté autenticado

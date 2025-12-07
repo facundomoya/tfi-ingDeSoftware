@@ -1,68 +1,108 @@
 import { NavLink, Outlet, useNavigate } from "react-router-dom";
-import { Activity, User, LogOut, Stethoscope, Heart } from "lucide-react";
-import { logout } from "../api/auth";
+import { Activity, User, LogOut, Stethoscope, Heart, FileText } from "lucide-react";
+import { logout, getUsuarioLogueado } from "../api/auth";
 
 export default function Sidebar() {
   const navigate = useNavigate();
+  const usuario = getUsuarioLogueado();
+  
+  // Debug: verificar si el usuario está logueado
+  if (!usuario) {
+    console.error("No hay usuario logueado en Sidebar");
+  }
+  
   return (
     <div className="bg-[#E8EEF2] min-h-screen">
 
       {/* SIDEBAR FIJO */}
       <aside className="fixed left-0 top-0 h-screen w-60 bg-[#37393A] text-white shadow-xl p-5 flex flex-col">
         <h2 className="font-bold text-xl tracking-wide">Panel Admin</h2>
+        
+        {/* Información del usuario logueado */}
+        {usuario && (
+          <div className="mt-4 p-3 bg-[#77B6EA]/20 rounded-lg border border-[#77B6EA]/30">
+            <p className="text-xs text-gray-400 uppercase tracking-wide">Usuario</p>
+            <p className="text-sm font-semibold mt-1">
+              {usuario.nombre} {usuario.apellido}
+            </p>
+            <p className="text-xs text-gray-400 mt-1">
+              {usuario.rol === "ENFERMERA" ? "Enfermera" : "Médico"}
+            </p>
+          </div>
+        )}
 
         <nav className="mt-8 flex flex-col gap-2 text-sm">
-          <NavLink
-            to="/urgencia"
-            className={({ isActive }) =>
-              `flex items-center gap-3 rounded-lg px-3 py-2 transition
-              ${isActive 
-                ? "bg-[#77B6EA]/20 border-l-4 border-[#77B6EA] text-white font-semibold" 
-                : "text-gray-300 hover:bg-white/10"}`
-            }
-          >
-            <Activity size={18} />
-            Urgencias
-          </NavLink>
+          {usuario?.rol === "ENFERMERA" && (
+            <>
+              <NavLink
+                to="/urgencia"
+                className={({ isActive }) =>
+                  `flex items-center gap-3 rounded-lg px-3 py-2 transition
+                  ${isActive 
+                    ? "bg-[#77B6EA]/20 border-l-4 border-[#77B6EA] text-white font-semibold" 
+                    : "text-gray-300 hover:bg-white/10"}`
+                }
+              >
+                <Activity size={18} />
+                Urgencias
+              </NavLink>
 
-          <NavLink
-            to="/paciente"
-            className={({ isActive }) =>
-              `flex items-center gap-3 rounded-lg px-3 py-2 transition
-              ${isActive 
-                ? "bg-[#77B6EA]/20 border-l-4 border-[#77B6EA] text-white font-semibold" 
-                : "text-gray-300 hover:bg-white/10"}`
-            }
-          >
-            <User size={18} />
-            Pacientes
-          </NavLink>
+              <NavLink
+                to="/paciente"
+                className={({ isActive }) =>
+                  `flex items-center gap-3 rounded-lg px-3 py-2 transition
+                  ${isActive 
+                    ? "bg-[#77B6EA]/20 border-l-4 border-[#77B6EA] text-white font-semibold" 
+                    : "text-gray-300 hover:bg-white/10"}`
+                }
+              >
+                <User size={18} />
+                Pacientes
+              </NavLink>
 
-          <NavLink
-            to="/enfermera"
-            className={({ isActive }) =>
-              `flex items-center gap-3 rounded-lg px-3 py-2 transition
-              ${isActive 
-                ? "bg-[#77B6EA]/20 border-l-4 border-[#77B6EA] text-white font-semibold" 
-                : "text-gray-300 hover:bg-white/10"}`
-            }
-          >
-            <Heart size={18} />
-            Enfermeras
-          </NavLink>
+              <NavLink
+                to="/enfermera"
+                className={({ isActive }) =>
+                  `flex items-center gap-3 rounded-lg px-3 py-2 transition
+                  ${isActive 
+                    ? "bg-[#77B6EA]/20 border-l-4 border-[#77B6EA] text-white font-semibold" 
+                    : "text-gray-300 hover:bg-white/10"}`
+                }
+              >
+                <Heart size={18} />
+                Enfermeras
+              </NavLink>
+            </>
+          )}
 
-          <NavLink
-            to="/medico"
-            className={({ isActive }) =>
-              `flex items-center gap-3 rounded-lg px-3 py-2 transition
-              ${isActive 
-                ? "bg-[#77B6EA]/20 border-l-4 border-[#77B6EA] text-white font-semibold" 
-                : "text-gray-300 hover:bg-white/10"}`
-            }
-          >
-            <Stethoscope size={18} />
-            Médicos
-          </NavLink>
+          {usuario?.rol === "MEDICO" && (
+            <>
+              <NavLink
+                to="/medico"
+                className={({ isActive }) =>
+                  `flex items-center gap-3 rounded-lg px-3 py-2 transition
+                  ${isActive 
+                    ? "bg-[#77B6EA]/20 border-l-4 border-[#77B6EA] text-white font-semibold" 
+                    : "text-gray-300 hover:bg-white/10"}`
+                }
+              >
+                <Stethoscope size={18} />
+                Atención Médica
+              </NavLink>
+              <NavLink
+                to="/atenciones"
+                className={({ isActive }) =>
+                  `flex items-center gap-3 rounded-lg px-3 py-2 transition
+                  ${isActive 
+                    ? "bg-[#77B6EA]/20 border-l-4 border-[#77B6EA] text-white font-semibold" 
+                    : "text-gray-300 hover:bg-white/10"}`
+                }
+              >
+                <FileText size={18} />
+                Atenciones
+              </NavLink>
+            </>
+          )}
         </nav>
 
         {/* BOTÓN LOGOUT Arriba del borde inferior */}

@@ -29,9 +29,8 @@ public class ModuloReclamo {
         // Lógica de negocio del médico
         siguiente.setEstado(EstadoIngreso.EN_PROCESO);
         
-        // Lo saca de la lista de espera
-        //Este metodo ya no se usa ya que el repositorio filtra por estado
-        //dbIngresos.eliminarDePendientes(siguiente);
+        // Guardar el cambio de estado
+        dbIngresos.guardar(siguiente);
 
         return siguiente;
     }

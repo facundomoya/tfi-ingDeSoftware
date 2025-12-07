@@ -18,7 +18,7 @@ export interface RegistrarUrgenciaDTO {
   tensionDiastolica?: number | null;
 }
 
-export interface IngresoUrgencia {
+export type IngresoUrgencia = {
   cuilPaciente: string;
   nombrePaciente: string;
   apellidoPaciente: string;
@@ -29,7 +29,7 @@ export interface IngresoUrgencia {
   frecuenciaRespiratoria: string | number | null;
   tensionSistolica: string | number | null;
   tensionDiastolica: string | number | null;
-}
+};
 
 export async function registrarUrgencia(payload: RegistrarUrgenciaDTO): Promise<void> {
   await http.post("/urgencias", payload);
