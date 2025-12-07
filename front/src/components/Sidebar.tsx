@@ -5,19 +5,19 @@ import { logout, getUsuarioLogueado } from "../api/auth";
 export default function Sidebar() {
   const navigate = useNavigate();
   const usuario = getUsuarioLogueado();
-  
+
   // Debug: verificar si el usuario está logueado
   if (!usuario) {
     console.error("No hay usuario logueado en Sidebar");
   }
-  
+
   return (
     <div className="bg-[#E8EEF2] min-h-screen">
 
       {/* SIDEBAR FIJO */}
       <aside className="fixed left-0 top-0 h-screen w-60 bg-[#37393A] text-white shadow-xl p-5 flex flex-col">
         <h2 className="font-bold text-xl tracking-wide">Panel Admin</h2>
-        
+
         {/* Información del usuario logueado */}
         {usuario && (
           <div className="mt-4 p-3 bg-[#77B6EA]/20 rounded-lg border border-[#77B6EA]/30">
@@ -38,8 +38,8 @@ export default function Sidebar() {
                 to="/urgencia"
                 className={({ isActive }) =>
                   `flex items-center gap-3 rounded-lg px-3 py-2 transition
-                  ${isActive 
-                    ? "bg-[#77B6EA]/20 border-l-4 border-[#77B6EA] text-white font-semibold" 
+                  ${isActive
+                    ? "bg-[#77B6EA]/20 border-l-4 border-[#77B6EA] text-white font-semibold"
                     : "text-gray-300 hover:bg-white/10"}`
                 }
               >
@@ -51,8 +51,8 @@ export default function Sidebar() {
                 to="/paciente"
                 className={({ isActive }) =>
                   `flex items-center gap-3 rounded-lg px-3 py-2 transition
-                  ${isActive 
-                    ? "bg-[#77B6EA]/20 border-l-4 border-[#77B6EA] text-white font-semibold" 
+                  ${isActive
+                    ? "bg-[#77B6EA]/20 border-l-4 border-[#77B6EA] text-white font-semibold"
                     : "text-gray-300 hover:bg-white/10"}`
                 }
               >
@@ -64,8 +64,8 @@ export default function Sidebar() {
                 to="/enfermera"
                 className={({ isActive }) =>
                   `flex items-center gap-3 rounded-lg px-3 py-2 transition
-                  ${isActive 
-                    ? "bg-[#77B6EA]/20 border-l-4 border-[#77B6EA] text-white font-semibold" 
+                  ${isActive
+                    ? "bg-[#77B6EA]/20 border-l-4 border-[#77B6EA] text-white font-semibold"
                     : "text-gray-300 hover:bg-white/10"}`
                 }
               >
@@ -78,11 +78,11 @@ export default function Sidebar() {
           {usuario?.rol === "MEDICO" && (
             <>
               <NavLink
-                to="/medico"
+                to="/reclamo"
                 className={({ isActive }) =>
                   `flex items-center gap-3 rounded-lg px-3 py-2 transition
-                  ${isActive 
-                    ? "bg-[#77B6EA]/20 border-l-4 border-[#77B6EA] text-white font-semibold" 
+                  ${isActive
+                    ? "bg-[#77B6EA]/20 border-l-4 border-[#77B6EA] text-white font-semibold"
                     : "text-gray-300 hover:bg-white/10"}`
                 }
               >
@@ -93,13 +93,25 @@ export default function Sidebar() {
                 to="/atenciones"
                 className={({ isActive }) =>
                   `flex items-center gap-3 rounded-lg px-3 py-2 transition
-                  ${isActive 
-                    ? "bg-[#77B6EA]/20 border-l-4 border-[#77B6EA] text-white font-semibold" 
+                  ${isActive
+                    ? "bg-[#77B6EA]/20 border-l-4 border-[#77B6EA] text-white font-semibold"
                     : "text-gray-300 hover:bg-white/10"}`
                 }
               >
                 <FileText size={18} />
                 Atenciones
+              </NavLink>
+              <NavLink
+                to="/medico"
+                className={({ isActive }) =>
+                  `flex items-center gap-3 rounded-lg px-3 py-2 transition
+              ${isActive
+                    ? "bg-[#77B6EA]/20 border-l-4 border-[#77B6EA] text-white font-semibold"
+                    : "text-gray-300 hover:bg-white/10"}`
+                }
+              >
+                <Stethoscope size={18} />
+                Médicos
               </NavLink>
             </>
           )}
