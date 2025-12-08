@@ -1,3 +1,6 @@
+import { formatearFecha } from "../utils/fecha";
+import { CronometroEspera } from "./CronometroEspera";
+
 export function ListaEsperaTable({ ingresos }: any) {
   function colorNivel(nivel: string) {
     switch (nivel.toUpperCase()) {
@@ -19,7 +22,6 @@ export function ListaEsperaTable({ ingresos }: any) {
   return (
     <div className="mt-6 rounded-l border bg-white shadow-sm overflow-hidden">
       <table className="w-full text-sm">
-
         {/* HEADER */}
         <thead className="bg-[#C7D3DD]/40 text-[#37393A]">
           <tr className="text-center">
@@ -31,24 +33,18 @@ export function ListaEsperaTable({ ingresos }: any) {
             <th className="p-3 text-[#77B6EA]">Temp (°C)</th>
             <th className="p-3 text-[#77B6EA]">FC (lpm)</th>
             <th className="p-3 text-[#77B6EA]">FR (rpm)</th>
-            <th className="p-3 text-[#77B6EA]">TA Sist.</th>
-            <th className="p-3 text-[#77B6EA]">TA Diast.</th>
+            <th className="p-3 text-[#77B6EA]">TA (Sist/Diast)</th>
+            <th className="p-3 text-[#77B6EA]">Fecha</th>
+            <th className="p-3 text-[#77B6EA]">Tiempo en espera</th>
           </tr>
         </thead>
 
         {/* BODY */}
         <tbody className="text-center">
           {ingresos.map((ingreso: any, idx: number) => (
-            <tr
-              key={idx}
-              className="border-t hover:bg-slate-50"
-            >
-              <td className="p-3  font-medium">
-                {ingreso.apellidoPaciente}
-              </td>
-              <td className="p-3  font-medium">
-               {ingreso.nombrePaciente}
-              </td>
+            <tr key={idx} className="border-t hover:bg-slate-50">
+              <td className="p-3  font-medium">{ingreso.apellidoPaciente}</td>
+              <td className="p-3  font-medium">{ingreso.nombrePaciente}</td>
               <td className="p-3 ">{ingreso.cuilPaciente}</td>
 
               <td className="p-3 ">
@@ -66,12 +62,31 @@ export function ListaEsperaTable({ ingresos }: any) {
               <td className="p-3">{ingreso.temperatura ?? "-"}</td>
               <td className="p-3">{ingreso.frecuenciaCardiaca ?? "-"}</td>
               <td className="p-3">{ingreso.frecuenciaRespiratoria ?? "-"}</td>
-              <td className="p-3">{ingreso.tensionSistolica ?? "-"}</td>
-              <td className="p-3">{ingreso.tensionDiastolica ?? "-"}</td>
+
+              <td className="p-3">
+                {(() => {
+                  const s = ingreso.tensionSistolica;
+                  const d = ingreso.tensionDiastolica;
+                  if (s == null && d == null) return "-";
+                  const sStr = s == null ? "-" : String(s);
+                  const dStr = d == null ? "-" : String(d);
+                  return `${sStr}/${dStr}`;
+                })()}
+              </td>
+
+              <td className="p-3">
+                {ingreso.fechaIngreso ? formatearFecha(ingreso.fechaIngreso) : "-"}
+              </td>
+              <td className="p-3">
+                {ingreso.fechaIngreso ? (
+                  <CronometroEspera fechaInicio={ingreso.fechaIngreso} />
+                ) : (
+                  "-"
+                )}
+              </td>
             </tr>
           ))}
         </tbody>
-
       </table>
     </div>
   );

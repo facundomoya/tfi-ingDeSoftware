@@ -1,12 +1,13 @@
 package org.example.domain;
 
+import java.time.LocalDateTime;
+
 import org.example.domain.valueobject.FrecuenciaCardiaca;
 import org.example.domain.valueobject.FrecuenciaRespiratoria;
 import org.example.domain.valueobject.TensionArterial;
 
-import java.time.LocalDateTime;
+public class Ingreso implements Comparable<Ingreso> {
 
-public class Ingreso implements Comparable<Ingreso>{
     Paciente paciente;
     Enfermera enfermera;
     LocalDateTime fechaIngreso;
@@ -19,14 +20,15 @@ public class Ingreso implements Comparable<Ingreso>{
     TensionArterial tensionArterial;
 
     public Ingreso(Paciente paciente,
-                   Enfermera enfermera,
-                   String informe,
-                   NivelEmergencia nivelEmergencia,
-                   Float temperatura,
-                   Float frecuenciaCardiaca,
-                   Float frecuenciaRespiratoria,
-                   Float frecuenciaSistolica,
-                   Float frecuenciaDiastolica){
+            Enfermera enfermera,
+            String informe,
+            NivelEmergencia nivelEmergencia,
+            Float temperatura,
+            Float frecuenciaCardiaca,
+            Float frecuenciaRespiratoria,
+            Float frecuenciaSistolica,
+            Float frecuenciaDiastolica) {
+
         this.paciente = paciente;
         this.enfermera = enfermera;
         this.fechaIngreso = LocalDateTime.now();
@@ -34,24 +36,32 @@ public class Ingreso implements Comparable<Ingreso>{
         this.nivelEmergencia = nivelEmergencia;
         this.estado = EstadoIngreso.PENDIENTE;
         this.temperatura = temperatura;
-        this.frecuenciaCardiaca = new FrecuenciaCardiaca(frecuenciaCardiaca);
-        this.frecuenciaRespiratoria = new FrecuenciaRespiratoria(frecuenciaRespiratoria);
-        this.tensionArterial = new TensionArterial(frecuenciaSistolica,frecuenciaDiastolica);
+
+        Float fCardiacaValidada = Guard.notNull(frecuenciaCardiaca, "La frecuencia cardíaca no puede ser nula");
+        this.frecuenciaCardiaca = new FrecuenciaCardiaca(fCardiacaValidada);
+
+        Float fRespiratoriaValidada = Guard.notNull(frecuenciaRespiratoria, "La frecuencia respiratoria no puede ser nula");
+        this.frecuenciaRespiratoria = new FrecuenciaRespiratoria(fRespiratoriaValidada);
+
+        Float fSistolicaValidada = Guard.notNull(frecuenciaSistolica, "La frecuencia sistólica no puede ser nula");
+        Float fDiastolicaValidada = Guard.notNull(frecuenciaDiastolica, "La frecuencia diastólica no puede ser nula");
+        this.tensionArterial = new TensionArterial(fSistolicaValidada, fDiastolicaValidada);
     }
 
-
-    public String getCuilPaciente(){
+    public String getCuilPaciente() {
         return this.paciente.getCuil();
     }
 
     public void setEstado(EstadoIngreso estado) {
-    this.estado = estado;
-}
+        this.estado = estado;
+    }
 
     @Override
     public int compareTo(Ingreso o) {
         int porNivel = this.nivelEmergencia.compararCon(o.nivelEmergencia); // usa tu compararCon
-        if (porNivel != 0) return porNivel;
+        if (porNivel != 0) {
+            return porNivel;
+        }
         return this.fechaIngreso.compareTo(o.fechaIngreso); // desempate por llegada
     }
     // ===== Getters de dominio =====
@@ -90,7 +100,7 @@ public class Ingreso implements Comparable<Ingreso>{
     }
 
     // Conveniencia para el mapper / JSON
-    public String  getFrecuenciaCardiaca() {
+    public String getFrecuenciaCardiaca() {
         // ajustá el nombre del metodo según tu value object
         return frecuenciaCardiaca.getValorFormateado();
     }

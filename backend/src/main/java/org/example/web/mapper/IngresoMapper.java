@@ -23,6 +23,9 @@ public class IngresoMapper {
         dto.setFrecuenciaRespiratoria(ingreso.getFrecuenciaRespiratoria());
         dto.setTensionSistolica(ingreso.getTensionSistolica());
         dto.setTensionDiastolica(ingreso.getTensionDiastolica());
+        
+        // Convertir LocalDateTime a String ISO para el frontend
+        dto.setFechaIngreso(ingreso.getFechaIngreso().toString());
 
         return dto;
     }

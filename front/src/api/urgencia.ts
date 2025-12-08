@@ -29,6 +29,7 @@ export type IngresoUrgencia = {
   frecuenciaRespiratoria: string | number | null;
   tensionSistolica: string | number | null;
   tensionDiastolica: string | number | null;
+  fechaIngreso: string;
 };
 
 export async function registrarUrgencia(payload: RegistrarUrgenciaDTO): Promise<void> {

@@ -109,7 +109,7 @@ export default function Reclamo() {
           </h2>
           <button
             onClick={handleReclamar}
-            disabled={loading || ingresosPendientes.length === 0}
+            disabled={loading || ingresosPendientes.length === 0 || ingresoReclamado !== null}
             className="relative inline-flex items-center gap-2 justify-center p-0.5 overflow-hidden text-sm font-semibold rounded-xl bg-linear-to-br from-[#4ea5f5] to-[#4fcd89] group shadow-md transition-all duration-300 hover:shadow-xl hover:-translate-y-0.5 active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed"
           >
             <span className="relative px-5 py-2.5 bg-white text-[#2e3440] rounded-[10px] transition-all duration-300 group-hover:bg-transparent group-hover:text-white flex items-center gap-2">
@@ -118,8 +118,11 @@ export default function Reclamo() {
             </span>
           </button>
         </div>
-        {ingresosPendientes.length === 0 && (
+        {ingresosPendientes.length === 0 && !ingresoReclamado && (
           <p className="text-gray-500 text-sm">No hay pacientes en espera</p>
+        )}
+        {ingresoReclamado && (
+          <p className="text-blue-600 text-sm">Ya tienes un paciente en atención. Finaliza la atención actual para reclamar otro.</p>
         )}
       </div>
 
