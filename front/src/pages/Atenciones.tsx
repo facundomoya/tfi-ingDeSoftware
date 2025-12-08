@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { listarAtenciones, type Atencion } from "../api/atenciones";
 import toast from "react-hot-toast";
 import { FileText, Calendar, User, Stethoscope } from "lucide-react";
+import { formatearFecha } from "../utils/fecha";
 
 export default function Atenciones() {
   const [atenciones, setAtenciones] = useState<Atencion[]>([]);
@@ -24,20 +25,7 @@ export default function Atenciones() {
     }
   }
 
-  function formatearFecha(fechaISO: string): string {
-    try {
-      const fecha = new Date(fechaISO);
-      return fecha.toLocaleString("es-AR", {
-        year: "numeric",
-        month: "2-digit",
-        day: "2-digit",
-        hour: "2-digit",
-        minute: "2-digit",
-      });
-    } catch {
-      return fechaISO;
-    }
-  }
+  
 
   function colorNivel(nivel: string) {
     switch (nivel.toUpperCase()) {

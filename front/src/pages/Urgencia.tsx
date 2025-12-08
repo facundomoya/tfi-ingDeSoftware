@@ -11,6 +11,7 @@ import { getUsuarioLogueado } from "../api/auth";
 
 type FormState = {
   informe: string;
+  
   nivelEmergencia: NivelEmergencia | "";
 
   // SIGNOS VITALES

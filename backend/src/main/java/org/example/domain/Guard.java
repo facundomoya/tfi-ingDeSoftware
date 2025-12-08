@@ -1,9 +1,9 @@
 // src/main/java/org/example/domain/Guard.java
 package org.example.domain;
 
-import org.example.domain.Exceptions.DomainException;
-
 import java.util.regex.Pattern;
+
+import org.example.domain.Exceptions.DomainException;
 
 public final class Guard {
     private Guard() {}
@@ -43,5 +43,12 @@ public final class Guard {
         if (email == null || email.isBlank() || !EMAIL_RE.matcher(email).matches())
             throw DomainException.validation("Email inválido");
         return email.trim();
+    }
+
+    public static <T> T notNull(T val, String message) {
+        if (val == null) {
+            throw DomainException.validation(message).withContext("valor", null);
+        }
+        return val;
     }
 }
