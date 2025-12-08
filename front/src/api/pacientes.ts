@@ -6,11 +6,11 @@ export type Cuil = string;
 export interface Domicilio {
   calle: string;
   numero: number;
-  localidad: string; // por ahora string, como definiste
+  localidad: string;
 }
 
 export interface ObraSocial {
-  codigo: string;      // o id: string | number
+  codigo: string;    
   nombre: string;
 }
 
@@ -20,7 +20,7 @@ export interface AltaPacienteDTO {
   nombre: string;
   domicilio: Domicilio;
 
-  // OS opcional (pero si viene, numeroAfiliado es mandatorio)
+  
   obraSocialCodigo?: string;
   numeroAfiliado?: string;
 }

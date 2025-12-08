@@ -1,3 +1,6 @@
+import { formatearFecha } from "../utils/fecha";
+import { CronometroEspera } from "./CronometroEspera";
+
 export function ListaEsperaTable({ ingresos }: any) {
   function colorNivel(nivel: string) {
     switch (nivel.toUpperCase()) {
@@ -33,6 +36,8 @@ export function ListaEsperaTable({ ingresos }: any) {
             <th className="p-3 text-[#77B6EA]">FR (rpm)</th>
             <th className="p-3 text-[#77B6EA]">TA Sist.</th>
             <th className="p-3 text-[#77B6EA]">TA Diast.</th>
+            <th className="p-3 text-[#77B6EA]">Fecha</th>
+            <th className="p-3 text-[#77B6EA]">Tiempo en espera</th>
           </tr>
         </thead>
 
@@ -68,6 +73,16 @@ export function ListaEsperaTable({ ingresos }: any) {
               <td className="p-3">{ingreso.frecuenciaRespiratoria ?? "-"}</td>
               <td className="p-3">{ingreso.tensionSistolica ?? "-"}</td>
               <td className="p-3">{ingreso.tensionDiastolica ?? "-"}</td>
+              <td className="p-3">
+                {ingreso.fechaIngreso ? formatearFecha(ingreso.fechaIngreso) : "-"}
+              </td>
+              <td className="p-3">
+                {ingreso.fechaIngreso ? (
+                  <CronometroEspera fechaInicio={ingreso.fechaIngreso} />
+                ) : (
+                  "-"
+                )}
+              </td>
             </tr>
           ))}
         </tbody>
