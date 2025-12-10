@@ -19,9 +19,17 @@ public class ServicioRegistroAtencion {
                                   Medico medico,
                                   String informe,
                                   LocalDateTime fechaAtencion) {
-        Atencion atencion = new Atencion(ingreso, informe, medico, fechaAtencion);
+        Atencion atencion = dbAtenciones.obtenerAtencionActivaPorMedico(medico)
+                .filter(a -> a.getIngreso() == ingreso)
+                .orElse(null);
 
-        dbAtenciones.guardar(atencion);
+        if (atencion != null) {
+            atencion.setInforme(informe);
+            atencion.setFechaAtencion(fechaAtencion);
+        } else {
+            atencion = new Atencion(ingreso, informe, medico, fechaAtencion);
+            dbAtenciones.guardar(atencion);
+        }
 
         ingreso.setEstado(EstadoIngreso.FINALIZADO);
 
