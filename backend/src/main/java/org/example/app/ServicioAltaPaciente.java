@@ -1,14 +1,16 @@
 package org.example.app;
 
 import org.example.app.interfaces.RepositorioPacientes;
+import org.example.app.interfaces.RepositorioObrasSociales;
+import org.example.domain.Afiliacion;
+import org.example.domain.Domicilio;
+import org.example.domain.ObraSocial;
+import org.example.domain.Paciente;
+import org.example.domain.Exceptions.DomainException;
 
 import java.util.List;
 
-import org.example.app.interfaces.RepositorioObrasSociales;
-import org.example.domain.*;
-import org.example.domain.Exceptions.DomainException;
-
-public class  ServicioAltaPaciente {
+public class ServicioAltaPaciente {
 
     private final RepositorioPacientes repoPacientes;
     private final RepositorioObrasSociales repoOS;
@@ -23,7 +25,12 @@ public class  ServicioAltaPaciente {
             String calle, Integer numero, String localidad,
             String obraSocialCodigo, String numeroAfiliado // ambos opcionales en la API
     ) {
-        // Mandatorios del paciente (dominio validará cada campo)
+        // Evitar duplicados por CUIL antes de crear
+        if (repoPacientes.buscarPacientePorCuil(cuil).isPresent()) {
+            throw DomainException.validation("Ya existe un paciente registrado con el CUIL " + cuil);
+        }
+
+        // Campos mandatorios del paciente
         Domicilio domicilio = new Domicilio(calle, numero, localidad);
 
         // Sin obra social: se crea sin afiliación
@@ -54,5 +61,7 @@ public class  ServicioAltaPaciente {
         return repoPacientes.listarTodos();
     }
 
-    private static boolean isBlank(String s) { return s == null || s.isBlank(); }
+    private static boolean isBlank(String s) {
+        return s == null || s.isBlank();
+    }
 }
