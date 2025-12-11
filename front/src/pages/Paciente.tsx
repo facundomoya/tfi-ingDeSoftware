@@ -1,12 +1,13 @@
-import { useState, useEffect } from "react";
-import { createPaciente, listObrasSociales, listPacientes } from "../api/pacientes";
-import PacienteModal from "../modal/PacienteModal";
-import { PacientesTable } from "../components/PacientesTable";
+import { useEffect, useState } from "react";
 import { Plus } from "lucide-react";
-import type { AltaPacienteDTO, Domicilio, ObraSocial, Paciente as PacienteType } from "../api/pacientes";
-import { useCuilInput } from "../hooks/useCuilInput";
-import { validarCuil, formatearCuil } from "../utils/cuil";
 import toast from "react-hot-toast";
+
+import { createPaciente, listObrasSociales, listPacientes, type AltaPacienteDTO, type Domicilio, type ObraSocial, type Paciente as PacienteType } from "../api/pacientes";
+import { extractErrorMessage } from "../api/http";
+import { PacientesTable } from "../components/PacientesTable";
+import { useCuilInput } from "../hooks/useCuilInput";
+import PacienteModal from "../modal/PacienteModal";
+import { formatearCuil, validarCuil } from "../utils/cuil";
 
 type FormState = {
   apellido: string;
@@ -34,8 +35,8 @@ export default function Paciente() {
   const [obras, setObras] = useState<ObraSocial[]>([]);
   const [pacientes, setPacientes] = useState<PacienteType[]>([]);
   const [loading, setLoading] = useState(false);
+  const [cuilDuplicado, setCuilDuplicado] = useState(false);
 
-  // 🧠 Hook de CUIL con formateo automático
   const cuilPaciente = useCuilInput("");
 
   function onChange<K extends keyof FormState>(key: K, value: FormState[K]) {
@@ -55,11 +56,23 @@ export default function Paciente() {
     cargarPacientes();
   }, []);
 
+  useEffect(() => {
+    if (cuilPaciente.valido === true) {
+      const formatted = formatearCuil(cuilPaciente.value);
+      setCuilDuplicado(pacientes.some((p) => p.cuil === formatted));
+    } else {
+      setCuilDuplicado(false);
+    }
+  }, [cuilPaciente.value, cuilPaciente.valido, pacientes]);
+
   async function cargarPacientes() {
     try {
       const data = await listPacientes();
       setPacientes(data);
-    } catch { }
+    } catch {
+      // en error dejamos la lista vacia
+      setPacientes([]);
+    }
   }
 
   /* ----------------------------------------
@@ -69,10 +82,16 @@ export default function Paciente() {
     e.preventDefault();
     setLoading(true);
     if (!validarCuil(cuilPaciente.value)) {
-      toast.error("El CUIL ingresado es inválido");
+      toast.error("El CUIL ingresado es invalido");
       setLoading(false);
       return;
     }
+    if (cuilDuplicado) {
+      toast.error("El CUIL ingresado ya existe");
+      setLoading(false);
+      return;
+    }
+
     const domicilio: Domicilio = {
       calle: form.calle,
       numero: Number(form.numero),
@@ -95,6 +114,9 @@ export default function Paciente() {
       setForm(initialForm);
       cuilPaciente.handleChange(""); // reset
       setOpenModal(false);
+    } catch (err: any) {
+      const mensaje = extractErrorMessage(err);
+      toast.error(mensaje);
     } finally {
       setLoading(false);
     }
@@ -123,9 +145,15 @@ export default function Paciente() {
                   rounded-xl border px-4 py-2.5 mt-1 shadow-sm bg-white
                   focus:ring-2 focus:ring-[#77B6EA]/40 focus:border-[#77B6EA]
                   outline-none transition-all
-                  ${cuilPaciente.valido === false ? "border-red-500" : ""}
-                  ${cuilPaciente.valido === true ? "border-green-600" : ""}
+                  ${cuilPaciente.valido === false || cuilDuplicado ? "border-red-500" : ""}
+                  ${cuilPaciente.valido === true && !cuilDuplicado ? "border-green-600" : ""}
                 `} value={cuilPaciente.value} onChange={(e) => cuilPaciente.handleChange(e.target.value)} placeholder="20-XXXXXXXX-X" />
+              {cuilPaciente.valido === false && (
+                <p className="text-sm text-red-600 mt-1">El CUIL ingresado no es valido</p>
+              )}
+              {cuilDuplicado && (
+                <p className="text-sm text-red-600 mt-1">El CUIL ingresado ya corresponde a un paciente registrado</p>
+              )}
             </div>
             {/* Apellido */}
             <div className="flex flex-col">
