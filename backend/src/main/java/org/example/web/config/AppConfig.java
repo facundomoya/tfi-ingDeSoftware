@@ -1,11 +1,11 @@
 package org.example.web.config;
 
-import org.example.app.AltaEnfermeraService;
-import org.example.app.AltaMedicoService;
-import org.example.app.AltaPacienteService;
+import org.example.app.ServicioAltaEnfermera;
+import org.example.app.ServicioAltaMedico;
+import org.example.app.ServicioAltaPaciente;
 import org.example.app.ServicioUrgencias;
-import org.example.app.ModuloReclamo;
-import org.example.app.ModuloRegistroAtencion;
+import org.example.app.ServicioReclamo;
+import org.example.app.ServicioRegistroAtencion;
 import org.example.app.interfaces.RepositorioIngresos;
 import org.example.app.interfaces.RepositorioObrasSociales;
 import org.example.app.interfaces.RepositorioPacientes;
@@ -25,13 +25,13 @@ public class AppConfig {
 
     @Bean
     public RepositorioPacientes repositorioPacientes() {
-        // Implementación en memoria
+        // ImplementaciÃ³n en memoria
         return new RepositorioPacientesEnMemoria();
     }
 
     @Bean
     public RepositorioObrasSociales repositorioObrasSociales() {
-        // Implementación en memoria
+        // ImplementaciÃ³n en memoria
         return new RepositorioObrasSocialesEnMemoria();
     }
 
@@ -47,13 +47,13 @@ public class AppConfig {
 
     @Bean
     public RepositorioEnfermeras repositorioEnfermeras() {
-        // Implementación en memoria
+        // ImplementaciÃ³n en memoria
         return new RepositorioEnfermerasEnMemoria();
     }
 
     @Bean
     public RepositorioMedicos repositorioMedicos() {
-        // Implementación en memoria
+        // ImplementaciÃ³n en memoria
         return new RepositorioMedicosEnMemoria();
     }
 
@@ -74,7 +74,7 @@ public class AppConfig {
 
     @Bean
     public PasswordHasher passwordHasher() {
-        // Usar logRounds bajo para desarrollo (más rápido)
+        // Usar logRounds bajo para desarrollo (mÃ¡s rÃ¡pido)
         return new BCryptHasher(4);
     }
 
@@ -98,11 +98,11 @@ public class AppConfig {
     }
 
     @Bean
-    public AltaPacienteService altaPacienteService(
+    public ServicioAltaPaciente altaPacienteService(
             RepositorioPacientes repoPacientes,
             RepositorioObrasSociales repoOS
     ) {
-        return new AltaPacienteService(repoPacientes, repoOS);
+        return new ServicioAltaPaciente(repoPacientes, repoOS);
     }
 
     @Bean
@@ -111,28 +111,29 @@ public class AppConfig {
     }
 
     @Bean
-    public ModuloReclamo moduloReclamo(RepositorioIngresos repoIngresos) {
-        return new ModuloReclamo(repoIngresos);
+    public ServicioReclamo moduloReclamo(RepositorioIngresos repoIngresos, RepositorioAtenciones repoAtenciones) {
+        return new ServicioReclamo(repoIngresos, repoAtenciones);
     }
 
     @Bean
-    public ModuloRegistroAtencion moduloRegistroAtencion(RepositorioAtenciones repoAtenciones, RepositorioIngresos repoIngresos) {
-        return new ModuloRegistroAtencion(repoAtenciones, repoIngresos);
+    public ServicioRegistroAtencion moduloRegistroAtencion(RepositorioAtenciones repoAtenciones, RepositorioIngresos repoIngresos) {
+        return new ServicioRegistroAtencion(repoAtenciones, repoIngresos);
     }
 
     @Bean
-    public AltaEnfermeraService altaEnfermeraService(
+    public ServicioAltaEnfermera altaEnfermeraService(
             RepositorioEnfermeras repoEnfermeras,
             ServicioAuth servicioAuth
     ) {
-        return new AltaEnfermeraService(repoEnfermeras, servicioAuth);
+        return new ServicioAltaEnfermera(repoEnfermeras, servicioAuth);
     }
 
     @Bean
-    public AltaMedicoService altaMedicoService(
+    public ServicioAltaMedico altaMedicoService(
             RepositorioMedicos repoMedicos,
             ServicioAuth servicioAuth
     ) {
-        return new AltaMedicoService(repoMedicos, servicioAuth);
+        return new ServicioAltaMedico(repoMedicos, servicioAuth);
     }
 }
+
