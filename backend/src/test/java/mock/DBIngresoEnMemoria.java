@@ -9,18 +9,28 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class DBIngresoEnMemoria implements RepositorioIngresos {
+<<<<<<< HEAD
+=======
+
+>>>>>>> eeaad0681ae00bbf4f2726ef8f77950b02add568
     private final List<Ingreso> tablaIngresos = new ArrayList<>();
 
     @Override
     public void guardar(Ingreso ingreso) {
         tablaIngresos.add(ingreso);
+
+        tablaIngresos.sort(Ingreso::compareTo);
     }
 
     @Override
     public List<Ingreso> obtenerPendientes() {
         return tablaIngresos.stream()
                 .filter(ingreso -> ingreso.getEstado() == EstadoIngreso.PENDIENTE)
+<<<<<<< HEAD
                 .sorted()
+=======
+                .sorted() 
+>>>>>>> eeaad0681ae00bbf4f2726ef8f77950b02add568
                 .collect(Collectors.toList());
     }
 

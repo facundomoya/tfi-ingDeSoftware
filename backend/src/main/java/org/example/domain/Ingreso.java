@@ -58,13 +58,12 @@ public class Ingreso implements Comparable<Ingreso> {
 
     @Override
     public int compareTo(Ingreso o) {
-        int porNivel = this.nivelEmergencia.compararCon(o.nivelEmergencia); // usa tu compararCon
+        int porNivel = this.nivelEmergencia.compararCon(o.nivelEmergencia);
         if (porNivel != 0) {
             return porNivel;
         }
         return this.fechaIngreso.compareTo(o.fechaIngreso); // desempate por llegada
     }
-    // ===== Getters de dominio =====
 
     public Paciente getPaciente() {
         return paciente;

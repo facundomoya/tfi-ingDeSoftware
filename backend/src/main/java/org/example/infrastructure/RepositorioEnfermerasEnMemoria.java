@@ -18,22 +18,12 @@ public class RepositorioEnfermerasEnMemoria implements RepositorioEnfermeras {
     }
 
     private void inicializarDatosMock() {
-        // Enfermera 1
         Enfermera e1 = new Enfermera(
                 "IGNACIO",
                 "SANCHEZ",
                 "20-43336577-2"
         );
-
-//        // Enfermera 2
-//        Enfermera e2 = new Enfermera(
-//                "Ana",
-//                "Martínez",
-//                "27-23456789-0"
-//        );
-
         guardarEnfermera(e1);
-       // guardarEnfermera(e2);
     }
 
     @Override

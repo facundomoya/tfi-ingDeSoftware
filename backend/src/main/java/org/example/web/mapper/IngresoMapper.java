@@ -1,4 +1,4 @@
-// src/main/java/org/example/web/mapper/IngresoMapper.java
+
 package org.example.web.mapper;
 
 import org.example.domain.Ingreso;
@@ -8,13 +8,16 @@ public class IngresoMapper {
 
     public static IngresoDTO toDTO(Ingreso ingreso) {
         IngresoDTO dto = new IngresoDTO();
+<<<<<<< HEAD
 
+=======
+>>>>>>> eeaad0681ae00bbf4f2726ef8f77950b02add568
         dto.setCuilPaciente(ingreso.getCuilPaciente());
 
         dto.setNombrePaciente(ingreso.getPaciente().getNombre());
         dto.setApellidoPaciente(ingreso.getPaciente().getApellido());
 
-        dto.setNivelEmergencia(ingreso.getNivelEmergencia().name()); // o getNombre(), si tenés
+        dto.setNivelEmergencia(ingreso.getNivelEmergencia().name());
         dto.setInforme(ingreso.getInforme());
         dto.setTemperatura(ingreso.getTemperatura());
         dto.setFrecuenciaCardiaca(ingreso.getFrecuenciaCardiaca());
@@ -26,7 +29,10 @@ public class IngresoMapper {
         if (ingreso.getEnfermera() != null) {
             dto.setEnfermeroCuil(ingreso.getEnfermera().getCuil());
         }
+<<<<<<< HEAD
 
+=======
+>>>>>>> eeaad0681ae00bbf4f2726ef8f77950b02add568
         dto.setFechaIngreso(ingreso.getFechaIngreso().toString());
 
         return dto;
