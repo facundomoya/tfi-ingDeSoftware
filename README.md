@@ -184,11 +184,11 @@ Completado ✔️
 ## Cómo Clonar el Repositorio
 En una terminal, ejecute:
   ```bash
-  git clone https://github.com/facundomoya/tfi-ingDeSoftware.git
+  git clone https://github.com/facundomoya/gestion-pacientes.git
   ```
   Luego:
   ```powershell
-  cd tfi-ingDeSoftware
+  cd gestion-pacientes
   ```
 
 ## Equipo de desarrollo
