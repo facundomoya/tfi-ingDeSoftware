@@ -1,199 +1,199 @@
-# Sistema de Gestión de Pacientes para Clínica
+# Patient Management System for Clinic
 
-## Descripción del Proyecto
-- **Objetivo:** Aplicación web para gestionar el flujo de atención en una clínica: registro de urgencias, lista de espera, reclamo de pacientes por médicos, registro de atenciones, y altas de pacientes, médicos y enfermeras.
-- **Ámbito académico:** Trabajo Final Integrador (TFI) de Ingeniería de Software – UTN FRT.
-- **Arquitectura:** Backend en Spring Boot (Java 21) + Frontend en React (Vite + TypeScript + Tailwind).
+## Project Description
+- **Objective:** Web application to manage clinic care flow: urgent admission registry, waiting list, patient claims by doctors, care registry, and discharges for patients, doctors and nurses.
+- **Academic Context:** Final Integrating Project of Ingeniería de Software – UTN FRT.
+- **Architecture:** Backend in Spring Boot (Java 21) + Frontend in React (Vite + TypeScript + Tailwind).
 
-## Características Principales
-- **Urgencias:**
-  - Registro de ingresos con `nivel de emergencia` y signos vitales.
-  - Lista de espera ordenada por prioridad (crítica → emergencia → urgencia → urgencia menor → sin urgencia) y orden de llegada para empates.
-  - Endpoints para ver ingresos pendientes y todos los ingresos.
-- **Reclamo de pacientes (médicos):**
-  - Reclamo del siguiente paciente priorizado.
-  - Consulta del paciente actualmente en atención.
-- **Registro de atención:**
-  - El médico registra el informe de atención sobre un ingreso en proceso.
-- **Altas y catálogos:**
-  - Alta y listado de `Pacientes`, `Médicos`, `Enfermeras`.
-  - Listado de `Obras Sociales`.
-- **Autenticación simplificada:**
-  - El front envía `X-User-Email` en cada solicitud (inyectado por interceptor).
-  - El backend valida perfil (`enfermera` para urgencias, `medico` para reclamos/atenciones).
-- **CORS activo:**
-  - Configurado para desarrollo abierto desde el frontend.
-- **Pruebas BDD:**
-  - Cucumber describe escenarios del módulo de urgencias (validaciones y prioridades).
+## Main Features
+- **Urgent Admissions:**
+  - Admission registry with `emergency level` and vital signs.
+  - Waiting list sorted by priority (critical → emergency → urgent → minor urgent → non-urgent) and order of arrival for ties.
+  - Endpoints to view pending admissions and all admissions.
+- **Patient Claims (by doctors):**
+  - Claim the next prioritized patient.
+  - Check the patient currently under care.
+- **Care Registry:**
+  - Doctor registers the care report on an admission in process.
+- **Discharges and Catalogs:**
+  - Discharge and listing of `Patients`, `Doctors`, `Nurses`.
+  - Listing of `Health Insurance Plans`.
+- **Simplified Authentication:**
+  - Frontend sends `X-User-Email` in each request (injected by interceptor).
+  - Backend validates profile (`nurse` for urgent admissions, `doctor` for claims/care).
+- **Active CORS:**
+  - Configured for open development from the frontend.
+- **BDD Tests:**
+  - Cucumber describes scenarios of the urgent module (validations and priorities).
 
-## Tecnologías Utilizadas
+## Technologies Used
 - **Backend:** Spring Boot 3.2, Java 21, Maven, Cucumber 7 (JUnit Platform), BCrypt.
 - **Frontend:** React 19, Vite 7, TypeScript 5.9, Tailwind CSS v4, Axios, React Router, Lucide Icons, React Hot Toast.
 
-## Estructura del Proyecto
+## Project Structure
 - **Backend:**
-  - App principal: [backend/src/main/java/org/example/ClinicaApplication.java](backend/src/main/java/org/example/ClinicaApplication.java)
-  - Configuración: [backend/src/main/resources/application.properties](backend/src/main/resources/application.properties), [backend/src/main/java/org/example/web/config/CorsConfig.java](backend/src/main/java/org/example/web/config/CorsConfig.java)
-  - Controladores:
-    - Pacientes: [backend/src/main/java/org/example/web/controller/PacienteController.java](backend/src/main/java/org/example/web/controller/PacienteController.java)
-    - Médicos: [backend/src/main/java/org/example/web/controller/MedicoController.java](backend/src/main/java/org/example/web/controller/MedicoController.java)
-    - Enfermeras: [backend/src/main/java/org/example/web/controller/EnfermeraController.java](backend/src/main/java/org/example/web/controller/EnfermeraController.java)
-    - Obras sociales: [backend/src/main/java/org/example/web/controller/ObraSocialController.java](backend/src/main/java/org/example/web/controller/ObraSocialController.java)
-    - Urgencias: [backend/src/main/java/org/example/web/controller/UrgenciasController.java](backend/src/main/java/org/example/web/controller/UrgenciasController.java)
-    - Reclamo: [backend/src/main/java/org/example/web/controller/ReclamoController.java](backend/src/main/java/org/example/web/controller/ReclamoController.java)
-    - Atenciones: [backend/src/main/java/org/example/web/controller/AtencionController.java](backend/src/main/java/org/example/web/controller/AtencionController.java), [backend/src/main/java/org/example/web/controller/AtencionesController.java](backend/src/main/java/org/example/web/controller/AtencionesController.java)
-  - Pruebas BDD: [backend/src/test/resources/features/moduloUrgencias.feature](backend/src/test/resources/features/moduloUrgencias.feature)
-  - Dependencias: [backend/pom.xml](backend/pom.xml)
+  - Main App: [backend/src/main/java/org/example/ClinicaApplication.java](backend/src/main/java/org/example/ClinicaApplication.java)
+  - Configuration: [backend/src/main/resources/application.properties](backend/src/main/resources/application.properties), [backend/src/main/java/org/example/web/config/CorsConfig.java](backend/src/main/java/org/example/web/config/CorsConfig.java)
+  - Controllers:
+    - Patients: [backend/src/main/java/org/example/web/controller/PacienteController.java](backend/src/main/java/org/example/web/controller/PacienteController.java)
+    - Doctors: [backend/src/main/java/org/example/web/controller/MedicoController.java](backend/src/main/java/org/example/web/controller/MedicoController.java)
+    - Nurses: [backend/src/main/java/org/example/web/controller/EnfermeraController.java](backend/src/main/java/org/example/web/controller/EnfermeraController.java)
+    - Health Insurance Plans: [backend/src/main/java/org/example/web/controller/ObraSocialController.java](backend/src/main/java/org/example/web/controller/ObraSocialController.java)
+    - Urgent Admissions: [backend/src/main/java/org/example/web/controller/UrgenciasController.java](backend/src/main/java/org/example/web/controller/UrgenciasController.java)
+    - Claims: [backend/src/main/java/org/example/web/controller/ReclamoController.java](backend/src/main/java/org/example/web/controller/ReclamoController.java)
+    - Care Registry: [backend/src/main/java/org/example/web/controller/AtencionController.java](backend/src/main/java/org/example/web/controller/AtencionController.java), [backend/src/main/java/org/example/web/controller/AtencionesController.java](backend/src/main/java/org/example/web/controller/AtencionesController.java)
+  - BDD Tests: [backend/src/test/resources/features/moduloUrgencias.feature](backend/src/test/resources/features/moduloUrgencias.feature)
+  - Dependencies: [backend/pom.xml](backend/pom.xml)
 - **Frontend:**
-  - Configuración Vite: [front/vite.config.ts](front/vite.config.ts)
-  - Cliente HTTP y APIs: [front/src/api/http.ts](front/src/api/http.ts), [front/src/api/pacientes.ts](front/src/api/pacientes.ts), [front/src/api/medicos.ts](front/src/api/medicos.ts), [front/src/api/enfermeras.ts](front/src/api/enfermeras.ts), [front/src/api/urgencia.ts](front/src/api/urgencia.ts), [front/src/api/reclamo.ts](front/src/api/reclamo.ts), [front/src/api/atenciones.ts](front/src/api/atenciones.ts)
-  - Páginas: [front/src/pages](front/src/pages)
-  - Componentes principales: [front/src/components](front/src/components), [front/src/modal](front/src/modal)
-  - Estilos y utilidades: [front/src/index.css](front/src/index.css), [front/src/utils](front/src/utils)
-- **Guía rápida de ejecución:** [EJECUTAR.md](EJECUTAR.md)
+  - Vite Configuration: [front/vite.config.ts](front/vite.config.ts)
+  - HTTP Client and APIs: [front/src/api/http.ts](front/src/api/http.ts), [front/src/api/pacientes.ts](front/src/api/pacientes.ts), [front/src/api/medicos.ts](front/src/api/medicos.ts), [front/src/api/enfermeras.ts](front/src/api/enfermeras.ts), [front/src/api/urgencia.ts](front/src/api/urgencia.ts), [front/src/api/reclamo.ts](front/src/api/reclamo.ts), [front/src/api/atenciones.ts](front/src/api/atenciones.ts)
+  - Pages: [front/src/pages](front/src/pages)
+  - Main Components: [front/src/components](front/src/components), [front/src/modal](front/src/modal)
+  - Styles and Utilities: [front/src/index.css](front/src/index.css), [front/src/utils](front/src/utils)
+- **Quick Execution Guide:** [EJECUTAR.md](EJECUTAR.md)
 
-## Descripción de Archivos y Carpetas
+## File and Folder Description
 
 ### Backend
-- **backend/pom.xml**: Configuración de dependencias Maven y compilación del proyecto Spring Boot.
-- **backend/src/main/java/org/example/ClinicaApplication.java**: Clase principal que inicia la aplicación Spring Boot.
-- **backend/src/main/java/org/example/web/controller/**: Controladores REST de los módulos de pacientes, médicos, enfermeras, urgencias, reclamos y atenciones.
-- **backend/src/main/java/org/example/web/config/**: Configuración de CORS, inyección de dependencias y de la aplicación.
-- **backend/src/main/java/org/example/app/**: Servicios de aplicación (ServicioUrgencias, ServicioReclamo, ServicioRegistroAtencion, etc.).
-- **backend/src/main/java/org/example/domain/**: Entidades del dominio (Paciente, Médico, Enfermera, Ingreso, Atencion, etc.).
-- **backend/src/main/java/org/example/auth/**: Módulo de autenticación con BCrypt y repositorio de usuarios.
-- **backend/src/main/java/org/example/infrastructure/**: Implementaciones de repositorios en memoria y configuración de infraestructura.
-- **backend/src/main/resources/application.properties**: Propiedades de configuración (puerto, aplicación, etc.).
-- **backend/src/test/java/**: Pruebas unitarias y de integración con JUnit 5 y Mockito.
-- **backend/src/test/java/mock/**: Implementaciones en memoria de repositorios para testing.
-- **backend/src/test/java/org/example/steps/**: Steps de Cucumber para pruebas BDD.
-- **backend/src/test/resources/features/**: Archivos de features en Gherkin para especificaciones ejecutables (moduloUrgencias.feature).
+- **backend/pom.xml**: Maven dependency configuration and compilation of Spring Boot project.
+- **backend/src/main/java/org/example/ClinicaApplication.java**: Main class that starts the Spring Boot application.
+- **backend/src/main/java/org/example/web/controller/**: REST controllers for patients, doctors, nurses, urgent admissions, claims and care modules.
+- **backend/src/main/java/org/example/web/config/**: CORS configuration, dependency injection and application settings.
+- **backend/src/main/java/org/example/app/**: Application services (UrgentService, ClaimService, CareRegistryService, etc.).
+- **backend/src/main/java/org/example/domain/**: Domain entities (Patient, Doctor, Nurse, Admission, Care, etc.).
+- **backend/src/main/java/org/example/auth/**: Authentication module with BCrypt and user repository.
+- **backend/src/main/java/org/example/infrastructure/**: In-memory repository implementations and infrastructure settings.
+- **backend/src/main/resources/application.properties**: Configuration properties (port, application, etc.).
+- **backend/src/test/java/**: Unit and integration tests with JUnit 5 and Mockito.
+- **backend/src/test/java/mock/**: In-memory repository implementations for testing.
+- **backend/src/test/java/org/example/steps/**: Cucumber steps for BDD tests.
+- **backend/src/test/resources/features/**: Gherkin feature files for executable specifications (moduloUrgencias.feature).
 
 ### Frontend
-- **front/vite.config.ts**: Configuración de Vite para desarrollo y build.
-- **front/package.json**: Dependencias npm y scripts de desarrollo.
-- **front/tsconfig.json**: Configuración de TypeScript.
-- **front/tailwind.config.js**: Configuración de Tailwind CSS.
-- **front/src/main.tsx**: Punto de entrada de la aplicación React.
-- **front/src/App.tsx**: Componente raíz de la aplicación.
-- **front/src/api/http.ts**: Cliente HTTP Axios configurado con interceptores para autenticación.
-- **front/src/api/pacientes.ts, medicos.ts, enfermeras.ts, urgencia.ts, reclamo.ts, atenciones.ts**: Llamadas a APIs del backend.
-- **front/src/pages/**: Páginas principales (Paciente, Medico, Enfermera, Urgencia, Reclamo, Atenciones, Login).
-- **front/src/components/**: Componentes reutilizables (Tablas, Sidebar, Cronómetro de espera).
-- **front/src/modal/**: Modales de alta (PacienteModal, UrgenciaModal).
-- **front/src/utils/**: Utilidades para validación (CUIL) y formato de fechas.
-- **front/src/hooks/**: Hooks personalizados para lógica reutilizable.
-- **front/src/routes/AppRouter.tsx**: Configuración de rutas de React Router.
-- **front/src/index.css, App.css**: Estilos globales de la aplicación.
-- **front/public/**: Archivos estáticos (favicon, etc.).
+- **front/vite.config.ts**: Vite configuration for development and build.
+- **front/package.json**: npm dependencies and development scripts.
+- **front/tsconfig.json**: TypeScript configuration.
+- **front/tailwind.config.js**: Tailwind CSS configuration.
+- **front/src/main.tsx**: React application entry point.
+- **front/src/App.tsx**: Root component of the application.
+- **front/src/api/http.ts**: Axios HTTP client configured with interceptors for authentication.
+- **front/src/api/pacientes.ts, medicos.ts, enfermeras.ts, urgencia.ts, reclamo.ts, atenciones.ts**: Backend API calls.
+- **front/src/pages/**: Main pages (Patient, Doctor, Nurse, Urgent, Claim, Care, Login).
+- **front/src/components/**: Reusable components (Tables, Sidebar, Wait Timer).
+- **front/src/modal/**: Discharge modals (PacienteModal, UrgenciaModal).
+- **front/src/utils/**: Utilities for validation (CUIL) and date formatting.
+- **front/src/hooks/**: Custom hooks for reusable logic.
+- **front/src/routes/AppRouter.tsx**: React Router configuration.
+- **front/src/index.css, App.css**: Global application styles.
+- **front/public/**: Static files (favicon, etc.).
 
-### Raíz
-- **README.md**: Este archivo con documentación general del proyecto.
+### Root
+- **README.md**: This file with general project documentation.
 
-## API del Backend
-- **Base:** `http://localhost:8080/api` (configurable en frontend vía `VITE_API_URL`).
-- **Rutas principales:**
-  - `GET /obras-sociales` → Lista obras sociales.
-  - `GET /pacientes` · `POST /pacientes` → Listado y alta.
-  - `GET /medicos` · `POST /medicos` → Listado y alta.
-  - `GET /enfermeras` · `POST /enfermeras` → Listado y alta.
-  - `POST /urgencias` → Registrar ingreso (requiere `X-User-Email` de una `enfermera`).
-  - `GET /urgencias/lista-espera` → Lista de espera ordenada.
-  - `GET /urgencias/ingresos` → Todos los ingresos registrados.
-  - `POST /reclamo` → Médico reclama siguiente paciente (requiere `X-User-Email`).
-  - `GET /reclamo/actual` → Paciente actualmente en atención del médico.
-  - `POST /atencion` → Registrar atención sobre ingreso en proceso (requiere `X-User-Email`).
+## Backend API
+- **Base:** `http://localhost:8080/api` (configurable in frontend via `VITE_API_URL`).
+- **Main Routes:**
+  - `GET /obras-sociales` → List health insurance plans.
+  - `GET /pacientes` · `POST /pacientes` → Listing and discharge.
+  - `GET /medicos` · `POST /medicos` → Listing and discharge.
+  - `GET /enfermeras` · `POST /enfermeras` → Listing and discharge.
+  - `POST /urgencias` → Register admission (requires `X-User-Email` from a `nurse`).
+  - `GET /urgencias/lista-espera` → Sorted waiting list.
+  - `GET /urgencias/ingresos` → All registered admissions.
+  - `POST /reclamo` → Doctor claims next patient (requires `X-User-Email`).
+  - `GET /reclamo/actual` → Patient currently under doctor care.
+  - `POST /atencion` → Register care on admission in process (requires `X-User-Email`).
 
-## Modelos y DTOs (resumen funcional)
-- **Urgencia:** `cuilPaciente`, `informe`, `nivelEmergencia`, signos vitales (temperatura, frecuencia cardiaca/respiratoria, tensión sistólica/diastólica).
-- **IngresoDTO:** datos del paciente + nivel de emergencia + fecha de ingreso + (enfermeroCuil).
-- **AtencionDTO:** paciente + médico + informe + fecha + nivel de emergencia.
-- **AltaPacienteRequest:** datos personales, domicilio y obra social (opcional).
+## Models and DTOs (functional summary)
+- **Urgent Admission:** `patientCuil`, `report`, `emergencyLevel`, vital signs (temperature, heart/respiratory rate, systolic/diastolic pressure).
+- **AdmissionDTO:** patient data + emergency level + admission date + (nursesCuil).
+- **CareDTO:** patient + doctor + report + date + emergency level.
+- **PatientDischargeRequest:** personal data, address and health insurance (optional).
 
-## Fundamento Funcional (Urgencias)
-- **Prioridad:** Pacientes se ordenan por `nivel de emergencia` (mayor a menor) y, en caso de empate, por `orden de llegada`.
-- **Validaciones:** Signos vitales mandatorios y rangos válidos (ej.: no negativos), documentados en [moduloUrgencias.feature](backend/src/test/resources/features/moduloUrgencias.feature).
-- **Flujo:** Enfermera admite → paciente entra en lista → médico reclama → médico atiende → atención registrada.
+## Functional Foundation (Urgent Admissions)
+- **Priority:** Patients are sorted by `emergency level` (highest to lowest) and, in case of a tie, by `order of arrival`.
+- **Validations:** Mandatory vital signs and valid ranges (e.g.: no negatives), documented in [moduloUrgencias.feature](backend/src/test/resources/features/moduloUrgencias.feature).
+- **Flow:** Nurse admits → patient enters list → doctor claims → doctor cares → care registered.
 
-## Cómo Ejecutar el proyecto
+## How to Run the Project
 - **Backend (Spring Boot):**
-  - Desde terminal en Windows:
+  - From terminal on Windows:
     ```powershell
     cd backend
     mvn spring-boot:run
     ```
-  - Verificar: abrir `http://localhost:8080/api/obras-sociales`.
+  - Verify: open `http://localhost:8080/api/obras-sociales`.
 - **Frontend (React + Vite):**
-  - Desde terminal en Windows:
+  - From terminal on Windows:
     ```powershell
     cd front
     npm install
     npm run dev
     ```
-  - Verificar: abrir `http://localhost:5173`.
-- **Configuración de API en el front:**
-  - Por defecto usa `http://localhost:8080/api`.
-  - Para apuntar a otra URL, defina `VITE_API_URL` (ej.: `.env`):
+  - Verify: open `http://localhost:5173`.
+- **API Configuration on Frontend:**
+  - By default uses `http://localhost:8080/api`.
+  - To point to another URL, define `VITE_API_URL` (e.g.: `.env`):
     ```env
     VITE_API_URL=http://localhost:8080/api
     ```
 
-## Pruebas
+## Testing
 
-### Pruebas Unitarias
-- **Framework:** JUnit 5 (Jupiter) integrado en Spring Boot.
-- **Mocking:** Mockito para simulación de dependencias.
-- **Repositorios Mock:** Implementaciones en memoria (`DBPacienteEnMemoria`, `DBMedicoEnMemoria`, `DBEnfermeraEnMemoria`, etc.) para tests sin base de datos.
-- **Casos de prueba:**
-  - Validación de creación de entidades (pacientes, médicos, enfermeras).
-  - Priorización correcta en lista de espera (por nivel de emergencia y orden de llegada).
-  - Validación de signos vitales (rangos, obligatoriedad).
-  - Cambios de estado de ingresos (pendiente → en proceso → finalizado).
-- **Ubicación:** [backend/src/test/java/org/example](backend/src/test/java/org/example)
-- **Ejecutar tests unitarios:**
+### Unit Tests
+- **Framework:** JUnit 5 (Jupiter) integrated in Spring Boot.
+- **Mocking:** Mockito for dependency simulation.
+- **Mock Repositories:** In-memory implementations (`DBPacienteEnMemoria`, `DBMedicoEnMemoria`, `DBEnfermeraEnMemoria`, etc.) for tests without database.
+- **Test Cases:**
+  - Validation of entity creation (patients, doctors, nurses).
+  - Correct prioritization in waiting list (by emergency level and order of arrival).
+  - Validation of vital signs (ranges, mandatory).
+  - Changes in admission status (pending → in process → completed).
+- **Location:** [backend/src/test/java/org/example](backend/src/test/java/org/example)
+- **Run unit tests:**
   ```powershell
   cd backend
   mvn test
   ```
 
-### Pruebas BDD (Behavior-Driven Development)
-- **Framework:** Cucumber 7 con JUnit Platform Engine.
-- **Especificaciones ejecutables:** [backend/src/test/resources/features/moduloUrgencias.feature](backend/src/test/resources/features/moduloUrgencias.feature)
-- **Steps (implementación):** [backend/src/test/java/org/example/steps](backend/src/test/java/org/example/steps)
-- **Escenarios cubiertos:**
-  - Ingreso de paciente existente con datos válidos.
-  - Validación de datos mandatorios (frecuencia cardiaca, respiratoria, etc.).
-  - Validación de rangos (frecuencias y tensiones no negativas).
-  - Priorización por nivel de emergencia (crítica > emergencia > urgencia > urgencia menor > sin urgencia).
-  - Orden de llegada para pacientes con igual nivel de emergencia.
-- **Ejecutar tests BDD:**
+### BDD Tests (Behavior-Driven Development)
+- **Framework:** Cucumber 7 with JUnit Platform Engine.
+- **Executable Specifications:** [backend/src/test/resources/features/moduloUrgencias.feature](backend/src/test/resources/features/moduloUrgencias.feature)
+- **Steps (implementation):** [backend/src/test/java/org/example/steps](backend/src/test/java/org/example/steps)
+- **Covered Scenarios:**
+  - Admission of existing patient with valid data.
+  - Validation of mandatory data (heart rate, respiratory rate, etc.).
+  - Validation of ranges (rates and pressures non-negative).
+  - Prioritization by emergency level (critical > emergency > urgent > minor urgent > non-urgent).
+  - Order of arrival for patients with same emergency level.
+- **Run BDD tests:**
   ```powershell
   cd backend
   mvn test -Dgroups=urgencias
   ```
 
-### Cobertura de Testing
-- **Mock Data:** Cada test utiliza datos pre-cargados en repositorios en memoria para aislar la lógica de la persistencia.
-- **CI/CD:** Los tests se ejecutan automáticamente con `mvn test` durante el build.
-- **Reportes:** Maven genera reportes en `backend/target/surefire-reports/`.
+### Testing Coverage
+- **Mock Data:** Each test uses pre-loaded data in in-memory repositories to isolate logic from persistence.
+- **CI/CD:** Tests run automatically with `mvn test` during build.
+- **Reports:** Maven generates reports in `backend/target/surefire-reports/`.
 
-## Estado del Proyecto
+## Project Status
 
-Completado ✔️
+Completed ✔️
 
-## Cómo Clonar el Repositorio
-En una terminal, ejecute:
+## How to Clone the Repository
+In a terminal, run:
   ```bash
-  git clone https://github.com/facundomoya/gestion-pacientes.git
+  git clone https://github.com/facundomoya/patient-management.git
   ```
-  Luego:
+  Then:
   ```powershell
-  cd gestion-pacientes
+  cd patient-management
   ```
 
-## Equipo de desarrollo
+## Development Team
 
-Este proyecto fue desarrollado por estudiantes de **Ingeniería en Sistemas de Información** de la **Universidad Tecnológica Nacional - Facultad Regional Tucumán (UTN-FRT)** para la materia **Ingeniería de Software**. Los desarrolladores del proyecto son:
+This project was developed by students of **Ingeniería en Sistemas de Información** from **Universidad Tecnológica Nacional - Facultad Regional Tucumán (UTN-FRT)** for the course **Ingeniería de Software**. The developers of the project are:
 
 - Facundo Moya - [Github](https://github.com/facundomoya)
 - Juan Martín Bossi - [Github](https://github.com/JuanBossi)
