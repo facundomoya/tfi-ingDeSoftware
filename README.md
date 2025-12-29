@@ -193,7 +193,7 @@ In a terminal, run:
 
 ## Development Team
 
-This project was developed by students of **Ingeniería en Sistemas de Información** from **Universidad Tecnológica Nacional - Facultad Regional Tucumán (UTN-FRT)** for the course **Ingeniería de Software**. The developers of the project are:
+This project was developed by students of **Information Systems Engineering** from **Universidad Tecnológica Nacional - Facultad Regional Tucumán (UTN-FRT)** for the subject *"Ingeniería de Software"*. The developers of the project are:
 
 - Facundo Moya - [Github](https://github.com/facundomoya)
 - Juan Martín Bossi - [Github](https://github.com/JuanBossi)
